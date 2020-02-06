@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="field">
+    <label class="label">First Name</label>
+    <div class="control">
+      <input class="input" type="text" placeholder="Please input first name" [(ngModel)]="firstName" [ngClass]="{'is-danger': !firstName}">
+    </div>
+  </div>
+
+  <div class="field">
+    <label class="label">Last Name</label>
+    <div class="control">
+      <input class="input" type="text" placeholder="Please input last name" [(ngModel)]="lastName"  [ngClass]="{'is-danger': !lastName}">
+      <span class="icon is-small is-right">
+        <i class="fas fa-check"></i>
+      </span>
+    </div>
+  </div>
+  <div class="field is-grouped">
+    <div class="control">
+      <button class="button is-link" (click)="onSubmit()">save</button>
+    </div>
+  </div>
+</div>

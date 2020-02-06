@@ -1,0 +1,31 @@
+<div class="columns">
+  <div class="column">
+    <section class="section">
+      <div class="container">
+        <article class="panel is-info">
+          <p class="panel-heading">
+            Todo
+          </p>
+          <div class="panel-block">
+            <p class="control has-icons-left">
+              <input class="input is-primary" type="text" (keyup.enter)="onEnter($event)" placeholder="Please input">
+            </p>
+          </div>
+          <app-card *ngFor="let todo of todoList" [todo]="todo" (achieve$)="onAchieve($event)"></app-card>
+        </article>
+      </div>
+    </section>
+  </div>
+  <div class="column">
+    <section class="section">
+      <div class="container">
+        <article class="panel">
+          <p class="panel-heading">
+            Achieve
+          </p>
+          <app-card-achieve *ngFor="let todo of todoAchieve" [todo]="todo"></app-card-achieve>
+        </article>
+      </div>
+    </section>
+  </div>
+</div>

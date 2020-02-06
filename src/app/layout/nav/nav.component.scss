@@ -1,0 +1,12 @@
+:host {
+  .navbar-menu {
+    background-color: #0086c3;
+    a {
+      color: white;
+      &:hover {
+        opacity: 0.5;
+        color: black;
+      }
+    }
+  }
+}

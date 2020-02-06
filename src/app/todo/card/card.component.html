@@ -1,0 +1,7 @@
+<a class="panel-block">
+  <label class="checkbox">
+    <input type="checkbox" [checked]="todo.isSuccess" (change)="onChange($event)">
+    {{todo.message}}
+  </label>
+  <span (click)="onAchieve()">Achieve</span>
+</a>
