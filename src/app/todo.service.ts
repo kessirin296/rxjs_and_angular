@@ -11,7 +11,7 @@ export class TodoService {
 
   get todoList(): Todo[] {
     const value = JSON.parse(localStorage.getItem(this.key));
-    return Array.isArray(value) ? value : [];
+    return (Array.isArray(value) ? value : []).map(a => new Todo(a));
   }
 
   set todoList(todo: Todo[]) {
