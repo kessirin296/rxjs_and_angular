@@ -10,11 +10,11 @@ export class Todo implements ITodo {
   public isSuccess: boolean;
   public isAchieve: boolean;
 
-  constructor(args?: Partial<ITodo>) {
+  constructor(args?: Partial<ITodo> & { _id?: string }) {
     this.message = args && args.message || '';
     this.isSuccess = args && args.isSuccess || false;
     this.isAchieve = args && args.isAchieve || false;
-    this._id = new Date().getTime().toString();
+    this._id = args && args._id ? args._id : new Date().getTime().toString();
   }
 
   get id(): string {
