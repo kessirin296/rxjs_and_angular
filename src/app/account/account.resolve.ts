@@ -6,7 +6,7 @@ import { delay } from 'rxjs/operators';
 @Injectable()
 export class AccountResolve implements Resolve<any> {
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    return of(null).pipe(delay(2000));
+    return of(null).pipe(delay(0));
   }
   constructor() { }
 

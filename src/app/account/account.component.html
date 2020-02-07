@@ -4,17 +4,26 @@
     <div class="control">
       <input class="input" type="text" placeholder="Please input first name" [(ngModel)]="firstName" [ngClass]="{'is-danger': !firstName}">
     </div>
+    <p class="help is-danger" *ngIf="!firstName">This first name is required</p>
   </div>
 
   <div class="field">
     <label class="label">Last Name</label>
     <div class="control">
       <input class="input" type="text" placeholder="Please input last name" [(ngModel)]="lastName"  [ngClass]="{'is-danger': !lastName}">
-      <span class="icon is-small is-right">
-        <i class="fas fa-check"></i>
-      </span>
     </div>
+    <p class="help is-danger" *ngIf="!lastName">This last name is required</p>
   </div>
+
+  <div class="field">
+    <label class="label">Email</label>
+    <div class="control">
+      <input class="input" type="text" placeholder="Please input email" [(ngModel)]="email"  [ngClass]="{'is-danger': !email}">
+    </div>
+    <p class="help is-danger" *ngIf="!email">This email is required</p>
+    <p class="help is-danger" *ngIf="email && checkEmail(email)">This email is invalid</p>
+  </div>
+
   <div class="field is-grouped">
     <div class="control">
       <button class="button is-link" (click)="onSubmit()">save</button>
