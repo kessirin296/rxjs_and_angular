@@ -1,32 +1,37 @@
-<div class="container">
-  <div class="field">
-    <label class="label">First Name</label>
-    <div class="control">
-      <input class="input" type="text" placeholder="Please input first name" [(ngModel)]="firstName" [ngClass]="{'is-danger': !firstName}">
+<form [formGroup]="form">
+  <div class="container">
+    <div class="field">
+      <label class="label">First Name</label>
+      <div class="control">
+        <input class="input" type="text" placeholder="Please input first name" formControlName="firstName"
+          [ngClass]="{'is-danger': firstName?.invalid}">
+      </div>
+      <p class="help is-danger" *ngIf="firstName.dirty && firstName?.errors?.required">This first name is required</p>
     </div>
-    <p class="help is-danger" *ngIf="!firstName">This first name is required</p>
-  </div>
 
-  <div class="field">
-    <label class="label">Last Name</label>
-    <div class="control">
-      <input class="input" type="text" placeholder="Please input last name" [(ngModel)]="lastName"  [ngClass]="{'is-danger': !lastName}">
+    <div class="field">
+      <label class="label">Last Name</label>
+      <div class="control">
+        <input class="input" type="text" placeholder="Please input last name" formControlName="lastName"
+          [ngClass]="{'is-danger': lastName?.invalid}">
+      </div>
+      <p class="help is-danger" *ngIf="(lastName.touched || lastName.dirty) && lastName?.errors?.required">This last name is required</p>
     </div>
-    <p class="help is-danger" *ngIf="!lastName">This last name is required</p>
-  </div>
 
-  <div class="field">
-    <label class="label">Email</label>
-    <div class="control">
-      <input class="input" type="text" placeholder="Please input email" [(ngModel)]="email"  [ngClass]="{'is-danger': !email}">
+    <div class="field">
+      <label class="label">Email</label>
+      <div class="control">
+        <input class="input" type="text" placeholder="Please input email" formControlName="email"
+          [ngClass]="{'is-danger': email.invalid}">
+      </div>
+      <p class="help is-danger" *ngIf="email?.errors?.required">This email is required</p>
+      <p class="help is-danger" *ngIf="email?.errors?.email">This email is invalid</p>
     </div>
-    <p class="help is-danger" *ngIf="!email">This email is required</p>
-    <p class="help is-danger" *ngIf="email && checkEmail(email)">This email is invalid</p>
-  </div>
 
-  <div class="field is-grouped">
-    <div class="control">
-      <button class="button is-link" (click)="onSubmit()">save</button>
+    <div class="field is-grouped">
+      <div class="control">
+        <button class="button is-link" (click)="onSubmit()">save</button>
+      </div>
     </div>
   </div>
-</div>
+</form>

@@ -3,25 +3,39 @@
   <div class="level-item has-text-centered">
     <div>
       <p class="heading">Todo</p>
-      <p class="title">{{todo | number}}</p>
+      <p class="title">{{(todo | async)?.length | number}}</p>
     </div>
   </div>
   <div class="level-item has-text-centered">
     <div>
       <p class="heading">Done</p>
-      <p class="title">{{done | number}}</p>
+      <p class="title">{{(done | async)?.length | number}}</p>
     </div>
   </div>
   <div class="level-item has-text-centered">
     <div>
       <p class="heading">Not done</p>
-      <p class="title">{{notDone | number}}</p>
+      <p class="title">{{(notDone | async)?.length | number}}</p>
     </div>
   </div>
   <div class="level-item has-text-centered">
     <div>
       <p class="heading">Achieved</p>
-      <p class="title">{{achieved | number}}</p>
+      <p class="title">{{(achieved | async).length | number}}</p>
+    </div>
+  </div>
+
+  <div class="level-item has-text-centered">
+    <div>
+      <p class="heading">Achieved done</p>
+      <p class="title">{{(achievedDone | async)?.length | number}}</p>
+    </div>
+  </div>
+
+  <div class="level-item has-text-centered">
+    <div>
+      <p class="heading">Achieved not done</p>
+      <p class="title">{{(achievedNotDone | async)?.length | number}}</p>
     </div>
   </div>
 </nav>

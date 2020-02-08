@@ -9,9 +9,9 @@ import { Todo } from 'src/app/model/todo';
 export class CardComponent implements OnInit {
 
   @Input() todo: Todo;
-
   @Output() achieve$: EventEmitter<Todo> = new EventEmitter();
-
+  @Output() done$: EventEmitter<Todo> = new EventEmitter<Todo>();
+  
   constructor() { }
 
   ngOnInit() {
@@ -25,6 +25,7 @@ export class CardComponent implements OnInit {
   public onChange(event: Event) {
     const value = (event.target as HTMLInputElement).checked;
     this.todo.isSuccess = value;
+    this.done$.emit(this.todo);
   }
 
 }

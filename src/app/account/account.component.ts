@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AccountService } from '../account.service';
 import { AccountImp } from '../model/account';
+import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
+import { debounceTime, throttleTime, auditTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-account',
@@ -9,44 +11,54 @@ import { AccountImp } from '../model/account';
 })
 export class AccountComponent implements OnInit {
 
-  public firstName: string;
-  public lastName: string;
-  public email: string;
+  public form: FormGroup;
 
   constructor(
-    public accountService: AccountService
+    public accountService: AccountService,
+    private fb: FormBuilder,
   ) { }
 
   ngOnInit() {
-    this.firstName = this.accountService.account.firstName;
-    this.lastName = this.accountService.account.lastName;
-    this.email = this.accountService.account.email;
+    const { firstName, lastName, email } = this.accountService.account;
+
+    this.form = this.fb.group({
+      firstName: [firstName, [Validators.required]],
+      lastName: [lastName, [Validators.required]],
+      email: [email, [Validators.required, Validators.email]],
+    });
+
+    this.form.get('email').valueChanges.subscribe(() => {
+      console.log(this.form.get('email').errors);
+    })
   }
 
-  onChange(type: 'firstName' | 'lastName' | 'email', value: string) {
-    switch (type) {
-      case 'firstName':
-        this.firstName = value;
-        break;
-      case 'lastName':
-        this.lastName = value;
-        break;
-      case 'email':
-        this.email = value;
-        break;
-    }
+  get firstName() {
+    return this.form.get('firstName');
   }
 
-  checkEmail(email: string) {
-    if (!email) {
-      return false;
-    }
-    const re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-    return !re.test(email);
+  get lastName() {
+    return this.form.get('lastName');
   }
+
+  get email() {
+    return this.form.get('email');
+  }
+
+  // checkEmail(email: string) {
+  //   if (!email) {
+  //     return false;
+  //   }
+  //   const re = /^(([^<>()\[\]\.,;:\s@\"]+(\.[^<>()\[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+  //   return !re.test(email);
+  // }
 
   onSubmit() {
-    this.accountService.account = new AccountImp({ firstName: this.firstName, lastName: this.lastName, email: this.email });
+    // this.form.value vs this.form.getRawValue();
+    const value = this.form.getRawValue();
+    if (this.form.valid) {
+      this.accountService.account = new AccountImp(value);
+      alert('success');
+    }
   }
 
 }

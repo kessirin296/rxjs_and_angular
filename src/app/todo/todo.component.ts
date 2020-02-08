@@ -1,6 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChildren, QueryList } from '@angular/core';
 import { Todo } from '../model/todo';
 import { TodoService } from '../todo.service';
+import { CardComponent } from './card/card.component';
+import { Observable, pipe } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-todo',
@@ -9,36 +12,43 @@ import { TodoService } from '../todo.service';
 })
 export class TodoComponent implements OnInit {
 
-  public todoList: Todo[] = [];
-  public todoAchieve: Todo[] = [];
+  @ViewChildren(CardComponent) appCard: QueryList<CardComponent>;
+
+  public todoList: Observable<Todo[]>;
+  public todoAchieve: Observable<Todo[]>;
 
   constructor(
     private todoService: TodoService
   ) { }
 
+  filterPipe(isAchieve: boolean) {
+    return pipe(
+      map((todoList: Todo[]) => todoList.filter(todo => todo.isAchieve === isAchieve))
+    );
+  }
+
   ngOnInit() {
-    this.todoList = this.todoService.todoList.filter(d => !d.isAchieve);
-    this.todoAchieve = this.todoService.todoList.filter(d => d.isAchieve);
+    this.todoList = this.todoService.todo$
+      .pipe(this.filterPipe(false));
+    this.todoAchieve = this.todoService.todo$
+      .pipe(this.filterPipe(true));
   }
 
   onEnter(event: KeyboardEvent) {
     const value = (event.target as HTMLInputElement).value;
     if (value) {
       const todo = new Todo({ message: value });
-      this.todoList.push(todo);
+      this.todoService.addTodo(todo);
       (event.target as HTMLInputElement).value = '';
     }
-    this.updateService();
   }
 
   onAchieve(todo: Todo) {
-    this.todoAchieve.push(todo);
-    this.todoList = this.todoList.filter((t) => t.id !== todo.id);
-    this.updateService();
+    this.todoService.updateTodo(todo);
   }
 
-  updateService() {
-    this.todoService.todoList = [...this.todoList, ...this.todoAchieve];
+  onDone(todo: Todo) {
+    this.todoService.updateTodo(todo);
   }
 
 }
