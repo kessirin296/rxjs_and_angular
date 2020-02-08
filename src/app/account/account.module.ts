@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AccountComponent } from './account.component';
 import { Routes, RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AccountResolve } from './account.resolve';
 
 const route: Routes = [
@@ -21,6 +21,7 @@ const route: Routes = [
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule, // for formGroup
     RouterModule.forChild(route),
   ],
   providers: [AccountResolve]

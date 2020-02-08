@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Todo } from 'src/app/model/todo';
+import { TodoService } from 'src/app/todo.service';
 
 @Component({
   selector: 'app-card',
@@ -11,8 +12,11 @@ export class CardComponent implements OnInit {
   @Input() todo: Todo;
 
   @Output() achieve$: EventEmitter<Todo> = new EventEmitter();
+  @Output() done$: EventEmitter<Todo> = new EventEmitter();
 
-  constructor() { }
+  constructor(
+    public todoService: TodoService,
+  ) { }
 
   ngOnInit() {
   }
@@ -25,6 +29,7 @@ export class CardComponent implements OnInit {
   public onChange(event: Event) {
     const value = (event.target as HTMLInputElement).checked;
     this.todo.isSuccess = value;
+    this.done$.emit(this.todo);
   }
 
 }
